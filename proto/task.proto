@@ -3,20 +3,20 @@ syntax = "proto3";
 package task;
 
 service TaskService {
-  rpc CreateTask(CreateTaskRequest) returns (TaskResponse);
-  rpc GetTaskById(GetTaskByIdRequest) returns (TaskResponse);
-  rpc GetAllTasks(Empty) returns (TaskListResponse);
-  rpc UpdateTask(UpdateTaskRequest) returns (TaskResponse);
-  rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
-  rpc CompleteTask(CompleteTaskRequest) returns (TaskResponse);
+  rpc CreateTask(CreateTaskRequest) returns (GenericResponse);
+  rpc GetTaskById(GetTaskByIdRequest) returns (GenericResponse);
+  rpc GetAllTasks(Empty) returns (GenericResponse);
+  rpc UpdateTask(UpdateTaskRequest) returns (GenericResponse);
+  rpc DeleteTask(DeleteTaskRequest) returns (GenericResponse);
+  rpc CompleteTask(CompleteTaskRequest) returns (GenericResponse);
 }
 
 message Task {
-  string id = 1;
+  int32 id = 1;
   string title = 2;
   string description = 3;
   bool completed = 4;
-  string created_by = 5;
+  int32 created_by = 5;
   string created_at = 6;
 }
 
@@ -27,34 +27,40 @@ message CreateTaskRequest {
 }
 
 message GetTaskByIdRequest {
-  string id = 1;
+  int32 id = 1;
 }
 
 message UpdateTaskRequest {
-  string id = 1;
+  int32 id = 1;
   string title = 2;
   string description = 3;
   bool completed = 4;
 }
 
 message DeleteTaskRequest {
-  string id = 1;
+  int32 id = 1;
 }
 
-message TaskResponse {
-  Task task = 1;
-}
-
-message TaskListResponse {
-  repeated Task tasks = 1;
-}
-
-message DeleteTaskResponse {
-  bool success = 1;
+message CompleteTaskRequest {
+  int32 id = 1;
 }
 
 message Empty {}
 
-message CompleteTaskRequest {
-  string id = 1;
+message GenericResponse {
+  int32 status = 1;  
+  string error = 2;    
+  oneof data {
+    Task task = 3;
+    TaskList taskList = 4;
+    DeleteTaskResult deleteResult = 5;
+  }
+}
+
+message TaskList {
+  repeated Task tasks = 1;
+}
+
+message DeleteTaskResult {
+  bool success = 1;
 }

@@ -3,15 +3,15 @@ syntax = "proto3";
 package user;
 
 service UserService {
-  rpc CreateUser(CreateUserRequest) returns (UserResponse);
-  rpc GetUserById(GetUserByIdRequest) returns (UserResponse);
-  rpc GetAllUsers(Empty) returns (UserListResponse);
-  rpc UpdateUser(UpdateUserRequest) returns (UserResponse);
-  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc CreateUser(CreateUserRequest) returns (GenericResponse);
+  rpc GetUserById(GetUserByIdRequest) returns (GenericResponse);
+  rpc GetAllUsers(Empty) returns (GenericResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (GenericResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (GenericResponse);
 }
 
 message User {
-  string id = 1;
+  int32 id = 1;
   string username = 2;
   string email = 3;
   string created_at = 4;
@@ -23,29 +23,35 @@ message CreateUserRequest {
 }
 
 message GetUserByIdRequest {
-  string id = 1;
+  int32 id = 1;
 }
 
 message UpdateUserRequest {
-  string id = 1;
+  int32 id = 1;
   string username = 2;
   string email = 3;
 }
 
 message DeleteUserRequest {
-  string id = 1;
-}
-
-message UserResponse {
-  User user = 1;
-}
-
-message UserListResponse {
-  repeated User users = 1;
-}
-
-message DeleteUserResponse {
-  bool success = 1;
+  int32 id = 1;
 }
 
 message Empty {}
+
+message GenericResponse {
+  int32 status = 1;
+  string error = 2;         
+  oneof data {
+    User user = 3;
+    UserList userList = 4;
+    DeleteUserResult deleteResult = 5;
+  }
+}
+
+message UserList {
+  repeated User users = 1;
+}
+
+message DeleteUserResult {
+  bool success = 1;
+}
