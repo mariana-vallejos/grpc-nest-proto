@@ -8,6 +8,7 @@ service TaskService {
   rpc GetAllTasks(Empty) returns (TaskListResponse);
   rpc UpdateTask(UpdateTaskRequest) returns (TaskResponse);
   rpc DeleteTask(DeleteTaskRequest) returns (DeleteTaskResponse);
+  rpc CompleteTask(CompleteTaskRequest) returns (TaskResponse);
 }
 
 message Task {
@@ -53,3 +54,7 @@ message DeleteTaskResponse {
 }
 
 message Empty {}
+
+message CompleteTaskRequest {
+  string id = 1;
+}
