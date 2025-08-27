@@ -18,7 +18,7 @@ Este repositorio se utiliza en los siguientes proyectos:
 - 🔗 [Users Service](https://github.com/mariana-vallejos/grpc-nest-users-svc)  
   Maneja la gestión de usuarios.
 
-- 🔗 [Tasks Service](https://github.com/mariana-vallejos/grpc-nest-tasks-svc)  
+- 🔗 [Tasks Service](https://github.com/mariana-vallejos/grpc-nest-task-svc)  
   Maneja la gestión de tareas.
 
 ## 📦 Instalación
